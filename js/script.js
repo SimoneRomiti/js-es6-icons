@@ -23,7 +23,6 @@
 $(document).ready(
   function(){
 
-
     const icons = [
       {
         name: "dog",
@@ -125,7 +124,9 @@ $(document).ready(
 
     const colorArray = ["orange", "red", "blue"];
 
+    // ARRAY CON TUTTE EL TIPOLOGIE
     const newArray = getTypes(icons);
+    // ARRAY CON TUTTE LE TIPOLOGIE SENZA DUPLICATI
     const noDuplicateTypes = deleteDuplicateTypes(newArray);
 
     // AGGIUNTA CHIAVE COLORE A ICONS IN TARGETICONS
@@ -141,15 +142,24 @@ $(document).ready(
     );
     console.log(targetIcons);
 
-
+    
     const select = $("#select");
-    dinamicSelection(noDuplicateTypes, select);
 
+    // AGGIUNTA OPZIONI DINAMICHE A SELECT
+    dinamicOptions(noDuplicateTypes, select);
 
+    // STAMPA SE VIENE CAMBIATA LA SELECT
+    select.change(
+      function() {
+        var selectedIcons = activeSelection(targetIcons, select);
+        console.log("selected", selectedIcons);
+        print(selectedIcons, iconsContainer);
+      }
+    );
+
+    // STAMPA INIZIALE SENZA NESSUN CAMBIO ALLA SELECT
     const iconsContainer = $(".icons-container");
     print(targetIcons, iconsContainer);
-
-
 
   }
 );
@@ -158,6 +168,7 @@ $(document).ready(
 // FUNZIONI
 
 function print(array, container){
+  container.html("");
   array.forEach(
     (element, index) => {
       $(container).append(`
@@ -172,6 +183,7 @@ function print(array, container){
   );
 }
 
+
 function getTypes(array){
   let typesArray = array.map(
     (element) => {
@@ -180,6 +192,7 @@ function getTypes(array){
   );
   return typesArray;
 }
+
 
 function deleteDuplicateTypes(array){
   const deleteArray = [];
@@ -192,6 +205,7 @@ function deleteDuplicateTypes(array){
   );
   return deleteArray;
 }
+
 
 function chooseColor(object, arrayTypes, arrayColors){
   // VERSIONE CON FOR
@@ -213,15 +227,32 @@ function chooseColor(object, arrayTypes, arrayColors){
 //   return color;
 }
 
-function dinamicSelection(array, selector){
+
+function dinamicOptions(array, selector){
   array.forEach(
     (element) => {
-      console.log(element);
+      // console.log(element);
       selector.append(
         `
-        <option value="">${element}</option>
+        <option>${element}</option>
         `
       );
     }
   );
+}
+
+
+function activeSelection(arrayObjects, selector){
+  var newArray = [];
+  arrayObjects.forEach(
+    (element) => {
+      if(selector.val() == element.type) {
+        newArray.push(element);
+      } else if(selector.val() == "All") {
+        newArray = arrayObjects;
+        return newArray;
+      }
+    }
+  );
+  return newArray;
 }
