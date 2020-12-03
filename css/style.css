@@ -22,7 +22,6 @@ header{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  align-content: space-between;
 }
 
 .icon{
@@ -35,7 +34,12 @@ header{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 10px;
 }
 .icon > i{
   font-size: 80px;
+}
+
+.icons-container > .icon > .name{
+  font-size: 28px;
 }
