@@ -128,6 +128,7 @@ $(document).ready(
           ...element,
           color: chooseColor(element, noDuplicateTypes, colorArray)
         }
+        // console.log(newElement.color);
         return newElement;
       }
     );
@@ -180,9 +181,22 @@ function deleteDuplicateTypes(array){
 }
 
 function chooseColor(object, arrayTypes, arrayColors){
+  // VERSIONE CON FOR
   for(var i = 0; i < arrayTypes.length; i++){
     if(object.type == arrayTypes[i]){
       return arrayColors[i];
     }
   }
+
+// VERSIONE CON FOR EACH
+//   var color;
+//   arrayTypes.forEach(
+//     (element, index) => {
+//       if(object.type == element){
+//         color = arrayColors[index];
+//         console.log(color);
+//       }
+//     }
+//   );
+//   return color;
 }
