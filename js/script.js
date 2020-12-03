@@ -12,6 +12,14 @@
 // Visualizzare le icone di colore diverso in base al
 // tipo.
 
+// milestone 3:
+// aggiungere una select per filtrare le icone in
+// base al tipo.
+// Popolare le options della select dinamicamente
+// e, ogni volta che cambia il valore selezionato,
+// visualizzare le icone corrispondenti.
+
+
 $(document).ready(
   function(){
 
@@ -119,8 +127,8 @@ $(document).ready(
 
     const newArray = getTypes(icons);
     const noDuplicateTypes = deleteDuplicateTypes(newArray);
-    // console.log("prova", noDuplicateTypes);
 
+    // AGGIUNTA CHIAVE COLORE A ICONS IN TARGETICONS
     const targetIcons = icons.map(
       (element) => {
         const newElement =
@@ -128,15 +136,20 @@ $(document).ready(
           ...element,
           color: chooseColor(element, noDuplicateTypes, colorArray)
         }
-        // console.log(newElement.color);
         return newElement;
       }
     );
     console.log(targetIcons);
 
+
+    const select = $("#select");
+    dinamicSelection(noDuplicateTypes, select);
+
+
     const iconsContainer = $(".icons-container");
-    // console.log(iconsContainer);
     print(targetIcons, iconsContainer);
+
+
 
   }
 );
@@ -187,7 +200,6 @@ function chooseColor(object, arrayTypes, arrayColors){
       return arrayColors[i];
     }
   }
-
 // VERSIONE CON FOR EACH
 //   var color;
 //   arrayTypes.forEach(
@@ -199,4 +211,17 @@ function chooseColor(object, arrayTypes, arrayColors){
 //     }
 //   );
 //   return color;
+}
+
+function dinamicSelection(array, selector){
+  array.forEach(
+    (element) => {
+      console.log(element);
+      selector.append(
+        `
+        <option value="">${element}</option>
+        `
+      );
+    }
+  );
 }
